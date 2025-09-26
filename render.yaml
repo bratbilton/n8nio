@@ -1,0 +1,33 @@
+# Exported from Render on 2025-09-26T20:33:13Z
+version: "1"
+projects:
+- name: Automation Dev
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: n8n:latest
+      runtime: image
+      image:
+        url: docker.io/n8nio/n8n:latest
+      plan: free
+      envVars:
+      - key: N8N_BASIC_AUTH_PASSWORD
+        sync: false
+      - key: N8N_BASIC_AUTH_USER
+        sync: false
+      - key: N8N_BASIC_AUTH_ACTIVE
+        sync: false
+      region: oregon
+      healthCheckPath: /alive
+      autoDeployTrigger: commit
+    databases:
+    - name: Biltontobillion
+      databaseName: biltontobillion
+      user: biltontobillion_user
+      plan: free
+      region: oregon
+      ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+      postgresMajorVersion: "17"
